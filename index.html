@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <title>jQuery init</title>
+</head>
+<body>
+    <div id="divWithText">
+        Text will be added here.<br>
+    </div>
+
+    <br>
+
+    <form onsubmit="succes()">
+        <input type="text" id="inputTextToAdd">
+        <input type="submit" value="Submit" id="button">
+    </form>
+
+    <script>
+        var divWithText = (document).getElementById("divWithText");
+        var input = (document).getElementById("inputTextToAdd");
+        var button = (document).getElementById("button");
+
+        $(button).on("click", function(event) {
+
+            // Prevent browser from refreshing and deleting new state of objects
+            event.preventDefault();
+
+            // Add input value to the existing div
+            $("#divWithText").append(input.value);
+
+            // Change value of input back to NULL
+            $(input).val('');
+        });
+
+        var checkForSubmitButton = function()
+        {
+            $(document).ready(function(){
+                $(button).attr('disabled',true);
+                $(input).keyup(function(){
+                    if($(input).val().length > 0)
+                    {
+                        console.log("not empty");
+                        $(button).attr('disabled', false);    
+                    }      
+                    else
+                    {
+                        $(button).attr('disabled',true);
+                        console.log("empty");
+                    }
+                        
+                })
+            });
+        }
+
+        setInterval(checkForSubmitButton, 1000);
+
+        /* function succes()
+        {
+            if(input.value === "")
+            {
+                button.disabled = true;
+            }
+            else
+            {
+                button.disabled = false;
+            }
+        } */
+        
+        /*var empty = false;
+
+        if($(input).val == "")
+        {
+            empty = true;
+        }
+        else
+        {
+            empty = false;
+        }
+
+        if(empty == true)
+        {
+            $(button).attr("disabled", "disabled");
+        }
+        else
+        {
+            $(button).attr("disabled", false);
+        } */
+    </script>
+</body>
+</html>
