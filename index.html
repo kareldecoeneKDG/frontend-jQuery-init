@@ -6,89 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <title>jQuery init</title>
+
+    <style>
+        #container {
+            width: 40%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 200px;
+        }
+    </style>
 </head>
 <body>
-    <div id="divWithText">
-        Text will be added here.<br>
+    <div id="container">
+        <div id="divWithText">
+            <h2>Text will be added here</h2>
+        </div>
+    
+        <br>
+    
+        <form>
+            <input type="text" id="inputTextToAdd">
+            <input type="submit" value="Submit" id="button">
+        </form>
     </div>
-
-    <br>
-
-    <form onsubmit="succes()">
-        <input type="text" id="inputTextToAdd">
-        <input type="submit" value="Submit" id="button">
-    </form>
 
     <script>
         var divWithText = (document).getElementById("divWithText");
         var input = (document).getElementById("inputTextToAdd");
         var button = (document).getElementById("button");
 
+        // When form is submitted
         $(button).on("click", function(event) {
 
             // Prevent browser from refreshing and deleting new state of objects
             event.preventDefault();
 
+            // Create value to add
+            var valueToAdd = input.value + "<br>"
+
             // Add input value to the existing div
-            $("#divWithText").append(input.value);
+            $("#divWithText").append(valueToAdd);
 
             // Change value of input back to NULL
             $(input).val('');
         });
-
-        var checkForSubmitButton = function()
-        {
-            $(document).ready(function(){
-                $(button).attr('disabled',true);
-                $(input).keyup(function(){
-                    if($(input).val().length > 0)
-                    {
-                        console.log("not empty");
-                        $(button).attr('disabled', false);    
-                    }      
-                    else
-                    {
-                        $(button).attr('disabled',true);
-                        console.log("empty");
-                    }
-                        
-                })
-            });
-        }
-
-        setInterval(checkForSubmitButton, 1000);
-
-        /* function succes()
-        {
-            if(input.value === "")
-            {
-                button.disabled = true;
-            }
-            else
-            {
-                button.disabled = false;
-            }
-        } */
         
-        /*var empty = false;
+        // Make button standard disabled
+        $(button).attr('disabled', true);
 
-        if($(input).val == "")
-        {
-            empty = true;
-        }
-        else
-        {
-            empty = false;
-        }
+        // When keyup in text input execute following function
+        $(input).keyup(function(){
 
-        if(empty == true)
-        {
-            $(button).attr("disabled", "disabled");
-        }
-        else
-        {
-            $(button).attr("disabled", false);
-        } */
+            // If value of input is longer than zero chars
+            if($(this).val().length != 0)
+                // Make button enabled
+                $(button).attr('disabled', false);
+            else
+                // Else make button disabled again
+                $(button).attr('disabled', true);
+        })
     </script>
 </body>
 </html>
